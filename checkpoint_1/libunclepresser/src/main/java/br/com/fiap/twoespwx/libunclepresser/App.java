@@ -29,5 +29,25 @@ public class App
         return new String(bytes, StandardCharsets.UTF_8).replaceAll("\\s+", "").toUpperCase();
     }
 
+    private static String runLengthEncode(String data) {
+        if (data.isEmpty()) return "";
+
+        StringBuilder encoded = new StringBuilder();
+        char currentChar = data.charAt(0);
+        int count = 1;
+
+        for (int i = 1; i < data.length(); i++) {
+            char c = data.charAt(i);
+            if (c == currentChar) {
+                count++;
+            } else {
+                encoded.append(currentChar).append(count);
+                currentChar = c;
+                count = 1;
+            }
+        }
+        encoded.append(currentChar).append(count);
+        return encoded.toString();
+    }
 
 }
