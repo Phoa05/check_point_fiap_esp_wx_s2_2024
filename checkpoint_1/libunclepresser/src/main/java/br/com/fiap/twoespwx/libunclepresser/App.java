@@ -50,4 +50,7 @@ public class App
         return encoded.toString();
     }
 
+    private static void writeOutputFile(String outputPath, String data) throws IOException {
+        Files.write(Paths.get(outputPath), data.getBytes(StandardCharsets.UTF_8));
+    }
 }
