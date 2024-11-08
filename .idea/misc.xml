@@ -5,6 +5,7 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/checkpoint_1/libunclepresser/pom.xml" />
+        <option value="$PROJECT_DIR$/mainProject/libunclepresser/pom.xml" />
       </list>
     </option>
   </component>
