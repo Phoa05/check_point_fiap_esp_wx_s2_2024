@@ -6,7 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="CHECKPOINT_1_GRUPO_BATATA_DOCE" />
+        <module name="CHECKPOINT_1_GRUPO_NEXOS" />
       </profile>
     </annotationProcessing>
   </component>

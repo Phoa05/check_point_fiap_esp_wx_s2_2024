@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class App {
@@ -28,7 +28,7 @@ public class App {
 
         try {
             String inputData = readInputFile(inputPath);
-            String compressedData = runLengthEncode(inputData);
+            String compressedData = runLengthEncode(inputData); // Chama a função com LinkedHashMap
             writeOutputFile(outputPath, compressedData);
 
             Map<Character, Integer> frequencies = calculateFrequencies(inputData);
@@ -46,24 +46,20 @@ public class App {
     }
 
     public static String runLengthEncode(String data) {
-        if (data.isEmpty()) return "";
+        Map<Character, Integer> counts = new LinkedHashMap<>();
 
-        StringBuilder encoded = new StringBuilder();
-        char currentChar = data.charAt(0);
-        int count = 1;
-
-        for (int i = 1; i < data.length(); i++) {
-            char c = data.charAt(i);
-            if (c == currentChar) {
-                count++;
-            } else {
-                encoded.append(currentChar).append(count);
-                currentChar = c;
-                count = 1;
+        for (char c : data.toCharArray()) {
+            if (c == 'A' || c == 'C' || c == 'T' || c == 'G') {
+                counts.put(c, counts.getOrDefault(c, 0) + 1);
             }
         }
-        encoded.append(currentChar).append(count);
-        return encoded.toString();
+
+        StringBuilder result = new StringBuilder();
+        for (Map.Entry<Character, Integer> entry : counts.entrySet()) {
+            result.append(entry.getValue()).append(entry.getKey());
+        }
+
+        return result.toString();
     }
 
     public static void writeOutputFile(String outputPath, String data) throws IOException {
@@ -71,7 +67,7 @@ public class App {
     }
 
     private static Map<Character, Integer> calculateFrequencies(String data) {
-        Map<Character, Integer> frequencies = new HashMap<>();
+        Map<Character, Integer> frequencies = new LinkedHashMap<>();
         for (char c : data.toCharArray()) {
             frequencies.put(c, frequencies.getOrDefault(c, 0) + 1);
         }
@@ -84,29 +80,24 @@ public class App {
         double compressionRate = ((double) outputSize / inputSize) * 100;
 
         System.out.println(" -----------------------------------------------------------");
-        System.out.println("|           LIB UNCLE PRESSER - GRUPO Nexos           |");
+        System.out.println("|           LIB UNCLE PRESSER - GRUPO Nexos                |");
         System.out.println("|-----------------------------------------------------------|");
+        System.out.println("| INPUT FILENAME: " + inputPath.substring(inputPath.lastIndexOf("\\") + 1) + " |");
+        System.out.println("| OUTPUT FILENAME: " + outputPath.substring(outputPath.lastIndexOf("\\") + 1) + " |");
         System.out.println("|                                                           |");
-        System.out.println("| INPUT  FILENAME: " + Paths.get(inputPath).getFileName() + "                          |");
-        System.out.println("| OUTPUT FILENAME: " + Paths.get(outputPath).getFileName() + "                         |");
+        System.out.println("| INPUT FILE SIZE: " + inputSize + " characters            |");
         System.out.println("|                                                           |");
-        System.out.println(" -----------------------------------------------------------");
-        System.out.println("|                                                           |");
-        System.out.println("| INPUT FILE SIZE: " + inputSize + " characters                    |");
-        System.out.println("|                                                           |");
-
         System.out.println("| FREQUENCIES:                                              |");
-        for (Map.Entry<Character, Integer> entry : frequencies.entrySet()) {
-            double percentage = (entry.getValue() * 100.0) / inputSize;
-            System.out.printf("| %c: %d (%.2f%%)                                        |\n", entry.getKey(), entry.getValue(), percentage);
-        }
-
+        frequencies.forEach((key, value) -> {
+            double percentage = ((double) value / inputSize) * 100;
+            System.out.printf("| %c: %d (%.2f%%)                                        |\n", key, value, percentage);
+        });
         System.out.println("|                                                           |");
         System.out.println("| ALGORITHM: Run-Length Encoding (RLE)                      |");
         System.out.println("| TEXT-CODIFICATION: UTF-8                                  |");
-        System.out.printf("| COMPRESSION RATE: %.2f%%                                 |\n", 100 - compressionRate);
+        System.out.println("| COMPRESSION RATE: " + String.format("%.2f", compressionRate) + "%             |");
         System.out.println("|                                                           |");
-        System.out.println("| OUTPUT FILE SIZE: " + outputSize + " characters                    |");
+        System.out.println("| OUTPUT FILE SIZE: " + outputSize + " characters           |");
         System.out.println(" -----------------------------------------------------------");
         System.out.println("|                                                           |");
         System.out.println("| SCORE: WELL-DONE                                          |");

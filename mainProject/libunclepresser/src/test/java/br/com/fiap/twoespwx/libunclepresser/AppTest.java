@@ -25,17 +25,17 @@ public class AppTest extends TestCase {
      */
     public void testRunLengthEncode() {
         String input = "AAAACCCTTG";
-        String expectedOutput = "A4C3T2G1";
+        String expectedOutput = "4A3C2T1G";
         String actualOutput = App.runLengthEncode(input);
         assertEquals("A codificação RLE não corresponde à saída esperada.", expectedOutput, actualOutput);
 
         input = "GGGGGGGGGG";
-        expectedOutput = "G10";
+        expectedOutput = "10G";
         actualOutput = App.runLengthEncode(input);
         assertEquals("A codificação RLE não corresponde à saída esperada para sequência longa.", expectedOutput, actualOutput);
 
         input = "TGGGGGGGGC";
-        expectedOutput = "T1G8C1";
+        expectedOutput = "1T8G1C";
         actualOutput = App.runLengthEncode(input);
         assertEquals("A codificação RLE não corresponde à saída esperada para sequência com caracteres únicos entre grupos.", expectedOutput, actualOutput);
     }
@@ -45,7 +45,6 @@ public class AppTest extends TestCase {
      */
     public void testReadInputFile() {
         try {
-            // Criação de um arquivo temporário para teste
             String tempFilePath = "temp_input.txt";
             String fileContent = "ACGT\nACGT";
             Files.write(Paths.get(tempFilePath), fileContent.getBytes(StandardCharsets.UTF_8));
@@ -54,7 +53,6 @@ public class AppTest extends TestCase {
             String actualContent = App.readInputFile(tempFilePath);
             assertEquals("A leitura do arquivo de entrada não removeu os espaços corretamente.", expectedContent, actualContent);
 
-            // Remover o arquivo temporário
             Files.delete(Paths.get(tempFilePath));
         } catch (IOException e) {
             fail("Falha ao testar leitura de arquivo: " + e.getMessage());
@@ -67,15 +65,13 @@ public class AppTest extends TestCase {
     public void testWriteOutputFile() {
         try {
             String tempOutputFilePath = "temp_output.txt";
-            String dataToWrite = "A4C3T2G1";
+            String dataToWrite = "4A3C2T1G";
 
             App.writeOutputFile(tempOutputFilePath, dataToWrite);
 
-            // Ler o conteúdo do arquivo de saída e verificar
             String actualContent = new String(Files.readAllBytes(Paths.get(tempOutputFilePath)), StandardCharsets.UTF_8);
             assertEquals("A gravação no arquivo de saída não corresponde aos dados esperados.", dataToWrite, actualContent);
 
-            // Remover o arquivo temporário
             Files.delete(Paths.get(tempOutputFilePath));
         } catch (IOException e) {
             fail("Falha ao testar gravação de arquivo: " + e.getMessage());
@@ -87,7 +83,7 @@ public class AppTest extends TestCase {
      */
     public void testFullCompression() {
         String input = "AAAACCCGGTT";
-        String expectedCompressedOutput = "A4C3G2T2";
+        String expectedCompressedOutput = "4A3C2G2T";
 
         String compressedOutput = App.runLengthEncode(input);
         assertEquals("Compressão completa falhou ao produzir o output esperado.", expectedCompressedOutput, compressedOutput);
