@@ -1,4 +1,4 @@
-package br.com.fiap.twoespwx.libunclepresser;
+package br.com.fiap.twoespwx.generateNucleiotideo;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

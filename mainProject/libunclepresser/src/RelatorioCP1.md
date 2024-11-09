@@ -2,7 +2,7 @@
 
 ---
 
-**Grupo:** Elite Jobs  
+** Grupo:** Elite Jobs  
 **Integrantes:**
 - Anna Yagyu - RM550360
 - Breno Silva - RM99275
