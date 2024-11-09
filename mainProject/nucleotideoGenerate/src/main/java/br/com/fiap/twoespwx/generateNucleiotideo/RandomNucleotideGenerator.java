@@ -10,7 +10,8 @@ public class RandomNucleotideGenerator implements NucleotideoRandomGenerator {
     public String generate(int sequenceSize) {
         StringBuilder sequence = new StringBuilder(sequenceSize);
         for (int i = 0; i < sequenceSize; i++) {
-            sequence.append(NUCLEOTIDES[random.nextInt(NUCLEOTIDES.length)]);
+            char nucleotide = NUCLEOTIDES[random.nextInt(NUCLEOTIDES.length)];
+            sequence.append(nucleotide);
         }
         return sequence.toString();
     }
