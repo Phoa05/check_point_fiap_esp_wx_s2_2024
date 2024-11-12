@@ -28,7 +28,7 @@ public class App {
 
         try {
             String inputData = readInputFile(inputPath);
-            String compressedData = runLengthEncode(inputData); // Chama a função com LinkedHashMap
+            String compressedData = runLengthEncode(inputData);
             writeOutputFile(outputPath, compressedData);
 
             Map<Character, Integer> frequencies = calculateFrequencies(inputData);
